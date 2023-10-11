@@ -26,13 +26,14 @@ def content_of_this_page(html, len_dict):
 def get_full_dictionary():
     temp_good_dict = {}
     temp_bad_dict = {}
-    temp_bad_dict.update(content_of_this_page(scraping_page(_servis_info.url_bad_list[0]), len(temp_bad_dict)))
-    temp_good_dict.update(content_of_this_page(scraping_page(_servis_info.url_good_list[0]), len(temp_good_dict)))
+    for url in _servis_info.url_bad_list:
+        temp_bad_dict.update(content_of_this_page(scraping_page(url), len(temp_bad_dict)))
+    for url in _servis_info.url_good_list:
+        temp_good_dict.update(content_of_this_page(scraping_page(url), len(temp_good_dict)))
     return (temp_good_dict, temp_bad_dict)
 
 
 def response_write_to_file(dictionarys):
-    print(dictionarys[0])
     for i in range(len(dictionarys[1])):
         with open(f"Dataset/Bad/{'{:04}'.format(i)}.txt", "w", encoding="utf-8") as file:
             file.write(dictionarys[1].get(i))
@@ -61,17 +62,5 @@ response_write_to_file(get_full_dictionary())
 
 
 
-'''
-def get_full_dictionary():
-    temp_good_dict = {}
-    temp_bad_dict = {}
-    for url in _servis_info.url_bad_list:
-        temp_bad_dict.update(content_of_this_page(scraping_page(url)))
-        print('Робит')
-    else: print("Капча")
-    for url in _servis_info.url_bad_list:
-        temp_good_dict.update(content_of_this_page(scraping_page(url)))
-    return {'good response' : temp_good_dict, 'bad response' : temp_bad_dict}
 
-'''
 

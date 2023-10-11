@@ -60,7 +60,6 @@ headers = {
 }
 
 
-dictionary_with_the_responses = {}
 
 
 
