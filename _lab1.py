@@ -12,6 +12,11 @@ def scraping_page(URL):
 
 
 def content_of_this_page(html, len_dict):
+    """
+        1)Получаем интересующий контент, а именно текст комментов и их название в 2 соответсвующие списка
+        2)Создаем словарь, в котором ключ - это число от 1 до 1000, а значение - название коммента в первой строке, далее сам комментарий
+        3)В случае, когда названия коммента нет - в первая строка именуется как "noname response"
+    """
     temp_dict = {}
     name_response_list = html.find_all("p", class_="sub_title")
     response_content_list = html.find_all("span", class_="_reachbanner_")
@@ -24,6 +29,10 @@ def content_of_this_page(html, len_dict):
     
 
 def get_full_dictionary():
+    """
+        1) Из служебной информации берем список ссылок на страницы с отзывами 
+        2) Возвращаем кортеж с 2 словарями 
+    """
     temp_good_dict = {}
     temp_bad_dict = {}
     for url in _servis_info.url_bad_list:
@@ -34,6 +43,10 @@ def get_full_dictionary():
 
 
 def response_write_to_file(dictionarys):
+    """
+        1) Записываем в файл
+        2) Здесь должно быть понятно почему я сделал ключи именно такими, это очень упростило задачу
+    """
     for i in range(len(dictionarys[1])):
         with open(f"Dataset/Bad/{'{:04}'.format(i)}.txt", "w", encoding="utf-8") as file:
             file.write(dictionarys[1].get(i))
